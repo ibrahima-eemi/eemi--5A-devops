@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kube-tp1-node-service
+  labels:
+    app: kube-tp1
+    tier: backend
+spec:
+  selector:
+    app: kube-tp1
+    tier: backend
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3000
+  type: ClusterIP

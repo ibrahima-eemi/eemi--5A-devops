@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kube-tp1-nginx-conf
+data:
+  nginx.conf: |
+    server {
+      listen 80 default_server;
+      listen [::]:80 default_server;
+
+      root /app;
+
+      location / {
+        proxy_pass http://kube-tp1-node-service:3000;
+      }
+    }

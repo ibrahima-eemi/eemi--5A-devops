@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-tp1-node-deployment
+  labels:
+    app: kube-tp1
+    tier: backend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kube-tp1
+      tier: backend
+  template:
+    metadata:
+      labels:
+        app: kube-tp1
+        tier: backend
+    spec:
+      containers:
+        - name: node
+          image: barry/demo-node:latest
+
+          ports:
+            - containerPort: 3000
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: kube-tp1-config
+                  key: PORT

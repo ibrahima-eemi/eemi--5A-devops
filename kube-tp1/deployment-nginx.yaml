@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kube-tp1-nginx-deployment
+  labels:
+    app: kube-tp1
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kube-tp1
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: kube-tp1
+        tier: frontend
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-config-volume
+              mountPath: /etc/nginx/conf.d/default.conf
+
+              subPath: nginx.conf
+      volumes:
+        - name: nginx-config-volume
+          configMap:
+            name: kube-tp1-nginx-conf
